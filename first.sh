@@ -23,16 +23,16 @@ if [[ "$ntype" == "    type:add" ]];then
 	n=$(redis-cli -a '123' get n)
 	echo "$n"
 	n=$((n+namount))
-	echo "$n"
+	$(redis-cli -a '123' set n "$n")
 	od -An -N1 -i /dev/random >> file1.txt
 	git commit -a -m "$n commit"
 	git push origin master
 elif [[ "$ntype" == "    type:minus" ]]; then
-	echo "ok"
         n=$(redis-cli -a '123' get n)
         echo "key n : $n"
         n=$((n-namount))
-        echo "$n"
+    	$(redis-cli -a '123' set n "$n")
+	echo "$(redis-cli -a '123' get n)"
         od -An -N1 -i /dev/random >> file1.txt
         git commit -a -m "$n commit"
         git push origin master
