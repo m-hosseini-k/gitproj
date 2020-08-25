@@ -1,7 +1,38 @@
 #!/bin/bash
 cd /home/administrator/project/gitproj
-n=$(redis-cli -a '123' get n)
-counter=$(redis-cli -a '123' incr n)
-od -An -N1 -i /dev/random >> file1.txt
-git commit -a -m "$counter commit"
-git push origin master
+
+while IFS= read -r line
+do
+  if [[ "$line" == *"type"* ]]; then
+	  ntype=$(echo "$line")
+  fi
+done < config.txt
+
+while IFS= read -r line
+do
+  if [[ "$line" == *"amount"* ]]; then
+          namount=$(echo "$line")
+  fi
+done < config.txt
+
+echo "$ntype"
+echo "$namount"
+
+if [[ "$ntype" == "    type:add" ]];then
+	echo "ok"
+	n=$(redis-cli -a '123' get n)
+	n=n+namount
+	counter=$(redis-cli -a '123' n)
+	od -An -N1 -i /dev/random >> file1.txt
+	git commit -a -m "$counter commit"
+	git push origin master
+elif [[ "$ntype" == "type:minus" ]]; then
+	n=$(redis-cli -a '123' get n)
+        n-=namount
+        counter=$(redis-cli -a '123' n)
+        od -An -N1 -i /dev/random >> file1.txt
+        git commit -a -m "$counter commit"
+        git push origin master
+    else
+	    echo "wrong"
+	fi
