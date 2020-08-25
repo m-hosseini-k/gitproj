@@ -24,9 +24,8 @@ if [[ "$ntype" == "    type:add" ]];then
 	echo "$n"
 	n=$((n+namount))
 	echo "$n"
-	counter=$(redis-cli -a '123' n)
 	od -An -N1 -i /dev/random >> file1.txt
-	git commit -a -m "$counter commit"
+	git commit -a -m "$n commit"
 	git push origin master
 elif [[ "$ntype" == "    type:minus" ]]; then
 	n=$(redis-cli -a '123' get n)
