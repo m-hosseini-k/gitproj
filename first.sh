@@ -30,7 +30,7 @@ if [[ "$ntype" == "    type:add" ]];then
 elif [[ "$ntype" == "    type:minus" ]]; then
 	echo "ok"
         n=$(redis-cli -a '123' get n)
-        echo "$n"
+        echo "key n : $n"
         n=$((n-namount))
         echo "$n"
         od -An -N1 -i /dev/random >> file1.txt
